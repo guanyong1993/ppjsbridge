@@ -14,7 +14,7 @@ npm install @apeiwan/ppjsbridge
 
 :::tip 最新版本(推荐)
 ```html
-https://github-npm.apeiwan.com/ppjsbridge/index.js
+https://github-npm.apeiwan.com/ppjsbridge/ppjsbridge.min.js
 ````
 :::
 
