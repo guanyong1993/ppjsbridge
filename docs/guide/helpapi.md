@@ -15,7 +15,7 @@ sidebarDepth: 2
 
 - **类型**：`string`
 
-- **用法**：[在线测试](https://app.apeiwan.com)
+- **用法**：[在线测试](/run/#调用接口-invoke)
 ```js
 PPJSBridge.os 
 ```
@@ -29,7 +29,7 @@ PPJSBridge.os
 
 - **类型**：`boolean`
 
-- **用法**：[在线测试](https://app.apeiwan.com)
+- **用法**：[在线测试](/run/#调用接口-invoke)
 
 ```js
 PPJSBridge.isPiPiApp 
@@ -42,7 +42,7 @@ PPJSBridge.isPiPiApp
 
 - **返回**：`object`
 
-- **用法**：[在线测试](https://app.apeiwan.com)
+- **用法**：[在线测试](/run/#调用接口-invoke)
 
 ```js
 // 默认获取的值为 window.location.href
@@ -61,7 +61,7 @@ PPJSBridge.getRequestUrlParam('https://xx.xx.xx/?name=123');
 
 - **返回**：`string`
 
-- **用法**：[在线测试](https://app.apeiwan.com)
+- **用法**：[在线测试](/run/#调用接口-invoke)
 
 ```js
 PPJSBridge.getStitchingUrlParams({name:'123',age:'456'});

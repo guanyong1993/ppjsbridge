@@ -17,7 +17,7 @@ sidebarDepth: 2
 - 每个回调函数都会接收两个参数，两个参数类型为 `object`，返回格式请看[回调约定](../guide/desc.html#回调约定)
 :::
 
-- **使用**：[在线测试](/run/#调用接口)
+- **使用**：[在线测试](/run/#调用接口-invoke)
     ```js
     PPJSBridge.invoke(options)
     ```
@@ -87,7 +87,7 @@ sidebarDepth: 2
 
 - **返回**：`无`
 
-- **使用**：[在线测试](https://app.apeiwan.com)
+- **使用**：[在线测试](/run/#调用接口-invoke)
     ```js
     PPJSBridge.ready(function(res,app) {
        // do something
@@ -106,7 +106,7 @@ sidebarDepth: 2
 
 - **返回值**：`无`
 
-- **使用**：[在线测试](https://app.apeiwan.com)
+- **使用**：[在线测试](/run/#调用接口-invoke)
     ```js
     PPJSBridge.login(function(res,app) {
        // do something
@@ -136,7 +136,7 @@ sidebarDepth: 2
 
 - **返回值**：`无`
 
-- **使用**：[在线测试](https://app.apeiwan.com)
+- **使用**：[在线测试](/run/#调用接口-invoke)
     ```js
     PPJSBridge.back()
     ```
@@ -147,7 +147,7 @@ sidebarDepth: 2
 
 - **返回**：`无`
 
-- **调用**：[在线测试](https://app.apeiwan.com)
+- **调用**：[在线测试](/run/#打开新页面-openwindow)
     ```js
     PPJSBridge.openWindow(options)
     ```
@@ -314,7 +314,7 @@ sidebarDepth: 2
 
 - **返回**：`boolean`
 
-- **调用**：[在线测试](https://app.apeiwan.com)
+- **调用**：[在线测试](/run/#调用接口-invoke)
 ```js
 PPJSBridge.isCanIUse(version)
 ```
@@ -340,7 +340,7 @@ PPJSBridge.isCanIUse(version)
 
 - **返回**：`boolean`
 
-- **调用**：[在线测试](https://app.apeiwan.com)
+- **调用**：[在线测试](/run/#调用接口-invoke)
 ```js
 PPJSBridge.isLogin()
 ```
@@ -352,7 +352,7 @@ PPJSBridge.isLogin()
 
 - **返回**：`string`
 
-- **调用**：[在线测试](https://app.apeiwan.com)
+- **调用**：[在线测试](/run/#调用接口-invoke)
 ```js
 PPJSBridge.getToken()
 ```
@@ -364,7 +364,7 @@ PPJSBridge.getToken()
 
 - **返回**：`string`
 
-- **调用**：[在线测试](https://app.apeiwan.com)
+- **调用**：[在线测试](/run/#调用接口-invoke)
 ```js
 PPJSBridge.getVersion()
 ```
@@ -379,7 +379,7 @@ PPJSBridge.getVersion()
 
 - **返回**：`string`
 
-- **调用**：[在线测试](https://app.apeiwan.com)
+- **调用**：[在线测试](/run/#调用接口-invoke)
 ```js
 PPJSBridge.getEnv()
 ```
@@ -391,7 +391,7 @@ PPJSBridge.getEnv()
 
 - **返回**：`object`
 
-- **调用**：[在线测试](https://app.apeiwan.com)
+- **调用**：[在线测试](/run/#调用接口-invoke)
 ```js
 PPJSBridge.getApp()
 ```

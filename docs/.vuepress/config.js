@@ -6,12 +6,6 @@ module.exports = {
   plugins: [
     ['@vuepress/active-header-links'],
     ['@vuepress/back-to-top'],
-    ['run',
-      {
-        jsLabs: ['https://unpkg.com/element-ui/lib/index.js'],
-        cssLabs: ['https://unpkg.com/element-ui/lib/theme-chalk/index.css'],
-      }
-    ],
     [
       'vuepress-plugin-container',
       {
@@ -43,7 +37,7 @@ module.exports = {
     nav: [
       {text: '指南', link: '/guide/'},
       {text: 'wiki', link: '/wiki/'},
-      // {text: '运行', link: '/run/'},
+      {text: '运行', link: '/run/'},
     ],
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
