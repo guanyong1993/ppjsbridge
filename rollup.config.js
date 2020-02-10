@@ -20,40 +20,11 @@ const tag = options.tag;
 const banner = `/*!${pkg.name} ${tag}@${pkg.version}*/`;
 
 
-let output = {};
-
-switch (format) {
-  case 'umd':
-    output = {
-      file: 'dist/ppjsbridge' + (isUglify ? '.min' : '') + '.js',
-      name: 'PPJSBridge',
-      format: "umd",
-    };
-    break;
-  case 'esm':
-    output = {
-      file: 'dist/ppjsbridge.esm.js',
-      format: "esm",
-    };
-    break;
-  case 'commonjs':
-    output = {
-      file: 'dist/ppjsbridge.common.js',
-      format: "cjs",
-    };
-    break;
-  case 'amd':
-    output = {
-      file: 'dist/ppjsbridge.amd.js',
-      format: "amd",
-      amd: {
-        id: 'PPJSBridge'
-      }
-    };
-    break;
-  default:
-    break
-}
+let output ={
+  file: 'dist/ppjsbridge' + (isUglify ? '.min' : '') + '.js',
+  name: 'PPJSBridge',
+  format: "umd",
+};
 
 
 export default {

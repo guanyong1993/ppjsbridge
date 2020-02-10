@@ -1,9 +1,8 @@
 {
   "name": "@apeiwan/ppjsbridge",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "皮皮PiPi App webview jsbridge",
-  "main": "dist/ppjsbridge.common.js",
-  "module": "dist/ppjsbridge.esm.js",
+  "main": "dist/ppjsbridge.js",
   "namespace": "PPJSBridge",
   "aliasOSS": "ppjsbridge",
   "scripts": {
@@ -17,8 +16,8 @@
     "build:released": "npm run rollup:prod",
     "build:released:oss": "npm run rollup:prod && npm run npm:oss:prod",
     "clear": "rm -rf dist",
-    "rollup:prod": "npm run clear && rollup -c --format umd --tag released && rollup -c --format umd --uglify true --tag released  && rollup -c --format esm --tag released  && rollup -c --format commonjs --tag released  && rollup -c --format amd --tag released",
-    "rollup:beta": "npm run clear && rollup -c --format umd --tag beta && rollup -c --format umd --uglify true --tag beta  && rollup -c --format esm --tag beta  && rollup -c --format commonjs --tag beta  && rollup -c --format amd --tag beta ",
+    "rollup:prod": "npm run clear && rollup -c --format umd --tag released && rollup -c --format umd --uglify true --tag released",
+    "rollup:beta": "npm run clear && rollup -c --format umd --tag beta && rollup -c --format umd --uglify true --tag beta",
     "npm:oss:prod": "node build/npm.oss.js && node build/npm.oss.js --tag released",
     "npm:oss:beta": "node build/npm.oss.js --tag beta"
   },
