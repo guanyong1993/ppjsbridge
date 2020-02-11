@@ -13,7 +13,12 @@
             </van-cell-group>
         </div>
         <div style="padding: 4px;padding-bottom: 0;border-bottom: 0;margin-bottom: 10px;">
-            <p style="padding-left: 5px">参数：data <span style="font-size: 14px;color:#999;">(json格式,选择手动就只读取手动)</span></p>
+            <p style="padding-left: 5px">参数：data
+            </p>
+            <p style="padding-left: 5px;font-size: 14px;color:#999;">(json格式,选择手动就只读取手动)
+            </p>
+            <p style="padding-left: 5px;font-size: 14px;color:#999;">!!!输入的json格式请通过网站检验符合通过
+            </p>
             <van-cell-group>
                 <van-field :disabled="jsonCustom" type="textarea" placeholder="请输入接口需要参数，格式 json 对象" v-model="data"/>
             </van-cell-group>
@@ -73,37 +78,34 @@
     },
     methods: {
       submit() {
-        console.warn('invoke::参数:::', JSON.stringify({
-          cmd: this.cmd,
-          version: this.version,
-          data: this.dataJson()
-        }))
-        this.$dialog.alert({
-          message: '请点击 vConsole 绿色箭头查看控制台执行结果'
-        });
-        PPJSBridge.invoke({
+        const invokeJSON = {
           cmd: this.cmd,
           version: this.version,
           data: this.dataJson(),
           handle: (res, app) => {
             console.log(JSON.stringify({res, app}))
           }
-        })
+        }
+        console.warn('invoke::参数:::', JSON.stringify(invokeJSON));
+        this.$dialog.alert({
+          message: '请点击 vConsole 绿色箭头查看控制台执行结果'
+        });
+        PPJSBridge.invoke(invokeJSON)
       },
       dataJson() {
         let json = {};
         if (!this.jsonCustom) {
-          try {
-            return JSON.parse(this.data || '{}');
-          } catch (e) {
-          }
+          let newText = this.data; //value
+          newText = newText.replace(/\r?\n/g, '<br />');
+          json = JSON.parse(newText)
         } else {
-          const jsonCustomList = this.jsonCustomList;
+          let jsonCustomList = this.jsonCustomList;
           for (let i = 0; i < jsonCustomList.length; i++) {
             const {key, value} = jsonCustomList[i];
             json[key] = value
           }
         }
+        return json
       }
     }
   }
