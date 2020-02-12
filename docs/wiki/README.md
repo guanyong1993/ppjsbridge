@@ -27,16 +27,23 @@
 `1.3.3`
 
 **data**：
- - 数据格式示例
+ - 数据格式示例,将接口 成功状态 的数据完整的 `res` 对象传入即可
 ```json5
 {
-  "sign": "2583A2B2CE835F7266690F70AF6450D9",
-  "pepayld": "wxl31011307928055d3d7131471061591800",
-  "partneId": "1514946151",
-  "appld": "wxOSieBleSleaOAbaO",
-  "packageValue": "Sign=WXPay",
-  "timestamp": "1576203672",
-  "nonceStr": "1576203672994"
+  "status": 200,
+  "data": {
+    "requestParameter": {
+      "sign": "2583A2B2CE835F7266690F70AF6450D9",
+      "pepayld": "wxl31011307928055d3d7131471061591800",
+      "partneId": "1514946151",
+      "appld": "wxOSieBleSleaOAbaO",
+      "packageValue": "Sign=WXPay",
+      "timestamp": "1576203672",
+      "nonceStr": "1576203672994"
+    },
+    "directPay": false
+  },
+  "msg": ""
 }
 ```
 
@@ -55,16 +62,16 @@
 `1.3.3`
 
 **data**：
- - 数据格式示例
+ - 数据格式示例,将接口 成功状态 的数据完整的 `res` 对象传入即可
+
 ```json5
 {
-  "sign": "2583A2B2CE835F7266690F70AF6450D9",
-  "pepayld": "wxl31011307928055d3d7131471061591800",
-  "partneId": "1514946151",
-  "appld": "wxOSieBleSleaOAbaO",
-  "packageValue": "Sign=WXPay",
-  "timestamp": "1576203672",
-  "nonceStr": "1576203672994"
+  "status": 200,
+  "data": {
+    "requestParameter": "alipay_sdk=alipay-sdk-java-3.3.49.ALL&app_id=2018091361378432&biz_content=%7B%22body%22%3A%22%E7%9A%AE%E7%9A%AE%E5%B8%81%E5%85%85%E5%80%BC%3A0.01%E5%B8%81%22%2C%22out_trade_no%22%3A%22C_TEST200212592880%22%2C%22product_code%22%3A%22QUICK_MSECURITY_PAY%22%2C%22subject%22%3A%22%E7%9A%AE%E7%9A%AE%E5%B8%81%E5%85%85%E5%80%BC%3A0.01%E5%B8%81%22%2C%22timeout_express%22%3A%2230m%22%2C%22total_amount%22%3A%220.01%22%7D&charset=utf-8&format=json&method=alipay.trade.app.pay&notify_url=https%3A%2F%2Ft-callback.apeiwan.com%2Fapi%2Fv1%2Fpay&sign=SMC8MnkhiyXdL6LtZSNwVmzD%2FRLrgQXv3gJDdTiiEaXM0UyFiwsyfdZem1nYA2qSn8OMTSBP%2FCuKMvxABAoL5JewhXkE%2FmsaTQ23HfFiI105Oc%2BZavktJMaKq3POD%2Fp12ALEkO2ZR6VP2BXsww4%2Fg%2F19SmSYKAsJpzHDB9pqD7XBKhSX3B8HZ9e8zIONYrDu7bTJTUOWbQ3Pc27VXwG83vYdjdBCSz162BfLYeeBj0iHABaAeYiQAHgBJbOXvqvsoBZa7bjSXn0TJG%2FStlqcqv1OCGXiok6UI6xNc3ju8sU8DheIYR5oIXDiT%2Bm%2B6GrtpaRDBFfoaF9Y9WaDItuNpQ%3D%3D&sign_type=RSA2&timestamp=2020-02-12+11%3A59%3A11&version=1.0",
+    "directPay": false
+  },
+  "msg": ""
 }
 ```
 
