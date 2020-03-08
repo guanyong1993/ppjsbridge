@@ -124,7 +124,7 @@
 :::
 
 - **cmd**：
-`funcshare`
+`func.share`
 
 - **data**:
 
