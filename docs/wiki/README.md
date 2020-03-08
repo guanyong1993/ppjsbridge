@@ -103,7 +103,7 @@
 :::
 
 - **cmd**：
-`function.openBrowser`
+`func.openBrowser`
 
 - **version**：
 `1.3.31`
@@ -124,7 +124,7 @@
 :::
 
 - **cmd**：
-`function.share`
+`funcshare`
 
 - **data**:
 
