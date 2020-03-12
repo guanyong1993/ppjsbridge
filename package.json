@@ -1,6 +1,6 @@
 {
   "name": "@apeiwan/ppjsbridge",
-  "version": "0.1.5",
+  "version": "0.1.0",
   "description": "皮皮PiPi App webview jsbridge",
   "main": "dist/ppjsbridge.js",
   "namespace": "PPJSBridge",
