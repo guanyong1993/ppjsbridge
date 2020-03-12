@@ -1,4 +1,4 @@
-/*!@apeiwan/ppjsbridge released@0.1.4*/
+/*!@apeiwan/ppjsbridge released@0.1.0*/
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :

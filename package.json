@@ -46,7 +46,7 @@
   ],
   "typings": "types/index.d.ts",
   "devDependencies": {
-    "@apeiwan/ppjsbridge": "^0.1.3",
+    "@apeiwan/ppjsbridge": "^0.1.0",
     "@vuepress/plugin-active-header-links": "^1.3.0",
     "@vuepress/plugin-back-to-top": "^1.3.0",
     "ali-oss": "^6.5.1",
