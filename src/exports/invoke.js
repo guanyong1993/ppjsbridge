@@ -1,9 +1,9 @@
 import {os} from "../utils/constant";
-import emitter from "../utils/emitter";
+import Emitter from "../utils/emitter";
 import {isPiPiApp} from "../utils/constant"
 import {isCanIUse} from "../utils/canIUse"
 import getApp from "./getApp";
-import uuidv4 from 'uuid/v4'
+import uuid from '../utils/uuid'
 
 /**
  * 返回指定调用的回调参数
@@ -18,8 +18,7 @@ const handleOptions = function (res, params = {}) {
   }
   if (action === 'success') {
     params.success && params.success(res, getApp());
-  }
-  if (action === 'fail') {
+  } else {
     params.fail && params.fail(res, getApp());
   }
   params.complete && params.complete(res, getApp());
@@ -60,7 +59,7 @@ let postMessage = function (params) {
    * @returns {boolean}
    */
 
-  let options ={... params};
+  let options = {...params};
   let cmd = options.cmd;
   if (cmd.indexOf('.') !== -1) {
     cmd = cmd.split('.');
@@ -76,7 +75,6 @@ let postMessage = function (params) {
 
 /**
  * 事件监听
- * @param {object | function} handle
  * @param {object} params
  * @param {string} params.cmd
  * @param {function=} params.success
@@ -84,42 +82,25 @@ let postMessage = function (params) {
  * @param {function=} params.complete
  * @returns {string | undefined}
  */
-let postMessageEmitEvent = function (handle, params) {
-
-  if (!handle) return;
-  // 是否保持回调，为了释放uuid的方法的内容，在方法得到响应后释放内存
-  // 如果需要为了保持类似native需要保持回调的话，就 handle 给一个对象，里面加上 keep:true
-  let keep = false;
-  let callBack = handle;
-  if (typeof handle === 'object') {
-    callBack = handle.callBack;
-    keep = !!handle.keep;
-  }
+let postMessageEmitEvent = function (params) {
 
   let letter = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'g', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
   let first_random_letter = letter[Math.round(Math.random() * 25)];
 
-  let _event_uuid_name = first_random_letter + uuidv4().replace(/-/g, '');
+  let _event_uuid_name = first_random_letter + uuid();
 
-  emitter.on(_event_uuid_name, res => {
+  Emitter.addOnceListener(_event_uuid_name, res => {
     const cmd = params.cmd;
     // todo 如果 ready 方式调用，此时第一次是没有app信息，所以ready方式的话，就先将全部对象赋值一次,这样 getApp() 才有数据返回
     if ((cmd === 'func.ready' || cmd === 'func.login') && !window.FLPPJSBridge) {
       window.FLPPJSBridge = res.data;
     }
     handleOptions(res, params);
-    // callBack(res, getApp())
-    // returnHandle(res, params);
-    // 是否保持回调，为了释放uuid 的方法的内容，在方法得到响应后释放内存
-    // 如果需要为了保持类似native需要保持回调的话，就 handle 给一个对象，里面加上 keep:true
-    if (!keep) {
-      emitter.off(_event_uuid_name, callBack);
-      delete window[_event_uuid_name];
-    }
+    //  为了释放uuid 的方法的内容，在方法得到响应后释放内存
   });
 
   window[_event_uuid_name] = function (res) {
-    emitter.emit(_event_uuid_name, res)
+    Emitter.emitEvent(_event_uuid_name, [res])
   };
 
   return _event_uuid_name
@@ -139,10 +120,10 @@ let postMessageEmitEvent = function (handle, params) {
  */
 let invoke = function (params) {
   if (!postMessageValidate(params)) return;
-  let {handle} = params;
+  let {handle, success, fail, complete} = params;
   const nativeParams = {cmd: params.cmd};
-  if (handle) {
-    nativeParams['handle'] = postMessageEmitEvent(handle, params);
+  if (handle || success || fail || complete) {
+    nativeParams['handle'] = postMessageEmitEvent(params);
   }
   if (params.data) {
     nativeParams['data'] = params.data;

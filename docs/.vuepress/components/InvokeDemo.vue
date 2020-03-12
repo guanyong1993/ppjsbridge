@@ -82,9 +82,12 @@
           cmd: this.cmd,
           version: this.version,
           data: this.dataJson(),
-          handle: (res, app) => {
-            console.log(JSON.stringify({res, app}))
-          }
+          // handle: (res, app) => {
+          //   console.log(JSON.stringify({res, app}))
+          // },
+          // success: function (res) {
+          //   console.log('res:::',res)
+          // }
         }
         console.warn('invoke::参数:::', JSON.stringify(invokeJSON));
         this.$dialog.alert({
@@ -102,7 +105,9 @@
           let jsonCustomList = this.jsonCustomList;
           for (let i = 0; i < jsonCustomList.length; i++) {
             const {key, value} = jsonCustomList[i];
-            json[key] = value
+            if (key) {
+              json[key] = value
+            }
           }
         }
         return json

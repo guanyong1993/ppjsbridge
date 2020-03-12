@@ -36,8 +36,7 @@
   },
   "homepage": "http://github-npm.apeiwan.com/ppjsbridge/docs/index.html",
   "dependencies": {
-    "mitt": "^1.2.0",
-    "uuid": "^3.4.0"
+    "wolfy87-eventemitter": "^5.2.9"
   },
   "files": [
     "dist",

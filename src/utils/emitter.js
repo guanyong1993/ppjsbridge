@@ -1,8 +1,6 @@
 /**
  * emitter
  */
-import mitt from 'mitt';
+import EventEmitter from 'wolfy87-eventemitter'
 
-const emitter = mitt();
-
-export default emitter;
+export default new EventEmitter();
