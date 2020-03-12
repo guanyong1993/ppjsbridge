@@ -58,6 +58,7 @@
 <script>
   import VConsole from 'vconsole'
   import PPJSBridge from '@apeiwan/ppjsbridge';
+  import dayjs from 'dayjs'
 
   export default {
     data() {
@@ -82,12 +83,12 @@
           cmd: this.cmd,
           version: this.version,
           data: this.dataJson(),
-          // handle: (res, app) => {
-          //   console.log(JSON.stringify({res, app}))
-          // },
-          // success: function (res) {
-          //   console.log('res:::',res)
-          // }
+          handle: (res, app) => {
+            console.log(`命令：${this.cmd}，执行时间：${dayjs().format('YYY-MM-DD HH:mm:ss')}命令回调结果:::`, JSON.stringify({
+              res,
+              app
+            }))
+          },
         }
         console.warn('invoke::参数:::', JSON.stringify(invokeJSON));
         this.$dialog.alert({
