@@ -94,7 +94,7 @@
       },
       dataJson() {
         let json = {};
-        if (!this.jsonCustom) {
+        if (!this.jsonCustom && this.data) {
           let newText = this.data; //value
           newText = newText.replace(/\r?\n/g, '<br />');
           json = JSON.parse(newText)
