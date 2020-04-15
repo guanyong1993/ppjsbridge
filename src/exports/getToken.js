@@ -1,7 +1,7 @@
 import {isPiPiApp} from '../utils/constant'
 
 let getToken = function () {
-  return isPiPiApp ? sessionStorage.getItem('token') || '' : '';
+  return isPiPiApp ? window.PPJSBridgeReady ? sessionStorage.getItem('token') : localStorage.getItem('token') : '';
 };
 
 export default getToken

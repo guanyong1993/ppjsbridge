@@ -8,6 +8,10 @@ import formatAppData from "../utils/formatAppData";
  * @param {function} handle -
  */
 let ready = function (handle) {
+
+  // 兼容新老版本的处理, 原来的版本是 FLPP.JSBridge
+  window['PPJSBridgeReady'] = true;
+
   function jsBridgeReady() {
     if (window.FLPPJSBridge) {
       formatAppData(handle, {data: window.FLPPJSBridge, action: 'success', message: ''})
