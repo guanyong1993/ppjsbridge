@@ -1,4 +1,4 @@
-/*!@apeiwan/ppjsbridge beta@0.1.0*/
+/*!@apeiwan/ppjsbridge beta@0.1.1*/
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -1217,6 +1217,21 @@
         return _objectSpread2({}, formatQuery, {}, routeOSQuery[os]);
       };
 
+      console.warn(':::', JSON.stringify({
+        version: version,
+        data: {
+          para: JSON.stringify({
+            ios: {
+              ios_route: addUrlParams(iOSUrl, getStitchingUrlParams(_objectSpread2({}, iOSQuery, {}, formatNativeQuery())))
+            },
+            android: {
+              androidRoute: addUrlParams(androidUrl, getStitchingUrlParams(_objectSpread2({}, androidQuery, {}, formatNativeQuery())))
+            }
+          }[os])
+        },
+        cmd: InvokeTypes.func.openAppPage,
+        handle: params.handle
+      }));
       return invoke({
         version: version,
         data: {
