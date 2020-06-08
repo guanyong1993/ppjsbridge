@@ -43,9 +43,14 @@ export const getUrlHashSearchStr = function (url) {
 /**
  * 获取请求的url所有参数(包含search，和 hash)
  * @param url {string=} [window.location.href]
+ * @param splitStr {string=} 分割的符号识别
  * @returns {{}}
  */
-export const getRequestUrlParam = function (url) {
+export const getRequestUrlParam = function (url, splitStr = '?') {
+  if (splitStr !== '?' && url.indexOf('&') !== -1) {
+    let splitStrIndex = url.indexOf('&');
+    url = url.substr(0, splitStrIndex) + '?' + url.substr(splitStrIndex);
+  }
   let urlHashSearchStr = getUrlHashSearchStr(url);
   let hash_str = urlHashSearchStr.hash_str;
   let search_str = urlHashSearchStr.search_str;

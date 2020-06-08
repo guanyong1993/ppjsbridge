@@ -1,4 +1,4 @@
-/*!@apeiwan/ppjsbridge released@0.1.0*/
+/*!@apeiwan/ppjsbridge beta@0.1.0*/
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -962,10 +962,18 @@
   /**
    * 获取请求的url所有参数(包含search，和 hash)
    * @param url {string=} [window.location.href]
+   * @param splitStr {string=} 分割的符号识别
    * @returns {{}}
    */
 
   var getRequestUrlParam = function getRequestUrlParam(url) {
+    var splitStr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '?';
+
+    if (splitStr !== '?' && url.indexOf('&') !== -1) {
+      var splitStrIndex = url.indexOf('&');
+      url = url.substr(0, splitStrIndex) + '?' + url.substr(splitStrIndex);
+    }
+
     var urlHashSearchStr = getUrlHashSearchStr(url);
     var hash_str = urlHashSearchStr.hash_str;
     var search_str = urlHashSearchStr.search_str;
@@ -1080,6 +1088,9 @@
    */
 
   var ready = function ready(_handle) {
+    // 兼容新老版本的处理, 原来的版本是 FLPP.JSBridge
+    window['PPJSBridgeReady'] = true;
+
     function jsBridgeReady() {
       if (window.FLPPJSBridge) {
         formatAppData(_handle, {
@@ -1113,6 +1124,22 @@
   };
 
   /**
+   * 编码url的参数
+   * @param url - url地址
+   * @param platform - 平台
+   * @returns {string}
+   */
+
+  var formatWebviewRouterUrl = function formatWebviewRouterUrl(url, platform) {
+    // ios使用&传参
+    // android使用?传参
+    var urlParams = getRequestUrlParam(url);
+    url = url.split('?')[0]; // 去掉所有传参
+
+    var urlString = getStitchingUrlParams(urlParams);
+    return url + (urlString ? (platform === 'ios' ? '&' : '?') + urlString : '');
+  };
+  /**
    * 打开一个新窗口，加载 (原生/web) 网址
    * @param {object} params
    * @param {string=} params.version  -- 版本号
@@ -1123,6 +1150,7 @@
    * @param {string} params.href -- 非app环境下，如果传递了链接，会进行打开
    * @param {handle} params.handle -- 回调
    */
+
 
   var openWindow = function openWindow(params) {
     if (isPiPiApp) {
@@ -1155,25 +1183,8 @@
 
       if (params.url) {
         var webUrl = params.url;
-        iOSQuery = {};
-        androidUrl = {}; // eslint-disable-next-line no-undef
-        // ios 的一些参数特别处理
-
-        var urlParams = getRequestUrlParam(webUrl);
-        var iOSParam = {};
-
-        if (urlParams.hideNavi !== undefined) {
-          iOSParam['hideNavi'] = urlParams.hideNavi;
-        }
-
-        if (urlParams.title !== undefined) {
-          iOSParam['title'] = urlParams.title;
-        }
-
-        var iOSParamStr = getStitchingUrlParams(iOSParam);
-        iOSParamStr = iOSParamStr ? '&' + iOSParamStr : '';
-        iOSUrl = 'FLWebPageViewController?urlString=' + encodeURIComponent(params.url) + iOSParamStr;
-        androidUrl = 'WebViewActivity?url=' + encodeURIComponent(params.url);
+        iOSUrl = 'FLWebPageViewController?urlString=' + formatWebviewRouterUrl(webUrl, 'ios');
+        androidUrl = 'WebViewActivity?url=' + formatWebviewRouterUrl(webUrl, 'android');
       }
 
       var formatNativeQuery = function formatNativeQuery() {

@@ -3,6 +3,21 @@ import invoke from './invoke'
 import {isPiPiApp, os} from '../utils/constant'
 import {getRequestUrlParam, getStitchingUrlParams} from "../utils/url";
 
+/**
+ * 编码url的参数
+ * @param url - url地址
+ * @param platform - 平台
+ * @returns {string}
+ */
+const formatWebviewRouterUrl = function (url, platform) {
+  // ios使用&传参
+  // android使用?传参
+  let urlParams = getRequestUrlParam(url);
+  url = url.split('?')[0]; // 去掉所有传参
+  let urlString = getStitchingUrlParams(urlParams);
+  return url + (urlString ? (platform === 'ios' ? '&' : '?') + urlString : '');
+}
+
 
 /**
  * 打开一个新窗口，加载 (原生/web) 网址
@@ -41,22 +56,8 @@ let openWindow = function (params) {
     };
     if (params.url) {
       const webUrl = params.url;
-      iOSQuery = {};
-      androidUrl = {};
-      // eslint-disable-next-line no-undef
-      // ios 的一些参数特别处理
-      const urlParams = getRequestUrlParam(webUrl);
-      let iOSParam = {};
-      if (urlParams.hideNavi !== undefined) {
-        iOSParam['hideNavi'] = urlParams.hideNavi
-      }
-      if (urlParams.title !== undefined) {
-        iOSParam['title'] = urlParams.title
-      }
-      let iOSParamStr = getStitchingUrlParams(iOSParam);
-      iOSParamStr = iOSParamStr ? '&' + iOSParamStr : '';
-      iOSUrl = 'FLWebPageViewController?urlString=' + encodeURIComponent(params.url) + iOSParamStr;
-      androidUrl = 'WebViewActivity?url=' + encodeURIComponent(params.url);
+      iOSUrl = 'FLWebPageViewController?urlString=' + formatWebviewRouterUrl(webUrl, 'ios')
+      androidUrl = 'WebViewActivity?url=' + formatWebviewRouterUrl(webUrl, 'android')
     }
     const formatNativeQuery = function () {
       const query = params.query;
