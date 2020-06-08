@@ -9,17 +9,13 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:oss": "rm -rf docs/.vuepress/dist && npm run docs:build && node build/docs.oss.js",
-    "build:beta:released": "npm run rollup:beta && npm run build:prod",
-    "build:beta:released:oss": "npm run rollup:beta:oss && npm run rollup:prod:oss ",
-    "build:beta": "npm run rollup:beta",
+    "build:prod": "npm run clear && rollup -c --format umd --tag released && rollup -c --format umd --uglify true --tag released",
+    "build:beta": "npm run clear && rollup -c --format umd --tag beta && rollup -c --format umd --uglify true --tag beta",
+    "build:prod:oss": "npm run rollup:prod && npm run npm:oss:prod",
     "build:beta:oss": "npm run rollup:beta && npm run npm:oss:beta",
-    "build:released": "npm run rollup:prod",
-    "build:released:oss": "npm run rollup:prod && npm run npm:oss:prod",
-    "clear": "rm -rf dist",
-    "rollup:prod": "npm run clear && rollup -c --format umd --tag released && rollup -c --format umd --uglify true --tag released",
-    "rollup:beta": "npm run clear && rollup -c --format umd --tag beta && rollup -c --format umd --uglify true --tag beta",
     "npm:oss:prod": "node build/npm.oss.js && node build/npm.oss.js --tag released",
-    "npm:oss:beta": "node build/npm.oss.js --tag beta"
+    "npm:oss:beta": "node build/npm.oss.js --tag beta",
+    "clear": "rm -rf dist"
   },
   "repository": {
     "type": "git",
