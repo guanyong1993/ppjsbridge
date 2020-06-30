@@ -162,4 +162,60 @@
 
     ::::: paramsName {string} data.url
     - 图片的url地址
+    :::::  
+
+
+## FM开通守护
+::: tip 支持系统
+**Android**
+**iOS**
+:::
+
+- **cmd**：
+`func.openGuard`
+
+- **data**:  
+    ::::    paramsName {string} data.userId
+    - 用户id
+    :::::
+
+    ::::    paramsName {string} data.nickname
+    - 用户昵称
+    :::::
+
+    ::::    paramsName {string} data.roomNo
+    - 房间id
+    :::::
+
+    ::::    paramsName {int} data.guardType
+    - 守护类型 `1:普通；2:黄金；3:钻石；`
+    :::::
+
+
+  
+## 巡管操作
+::: tip 支持系统
+**Android**
+**iOS**
+:::
+
+- **cmd**：  
+  :::: 用户操作 `func.userOperate` ::::  
+  :::: 房间操作 `func.roomOperate` :::: 
+
+- **data**:  
+    ::::    paramsName {string} data.userId
+    - 用户id
+    :::::
+
+    ::::    paramsName {string} data.nickname
+    - 用户昵称
+    :::::
+
+    ::::    paramsName {string} data.roomNo
+    - 房间id
+    :::::
+
+    ::::    paramsName {Object} 巡管操作后接口返回的数据
+    - 接口发挥数据
     :::::
