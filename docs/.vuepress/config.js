@@ -17,7 +17,8 @@ module.exports = {
       'vuepress-plugin-container',
       {
         type: 'params',
-        before: info => `<div class="params"><p class="params_title">${info}</p>`,
+        before: (info) =>
+          `<div class="params"><p class="params_title">${info}</p>`,
         after: '</div>',
       },
     ],
@@ -25,7 +26,8 @@ module.exports = {
       'vuepress-plugin-container',
       {
         type: 'paramsName',
-        before: info => `<div class="params-name"><p class="params-name_title">${info}</p>`,
+        before: (info) =>
+          `<div class="params-name"><p class="params-name_title">${info}</p>`,
         after: '</div>',
       },
     ],
@@ -35,9 +37,9 @@ module.exports = {
     docsDir: 'docs',
     logo: '/logo.png',
     nav: [
-      {text: '指南', link: '/guide/'},
-      {text: 'wiki', link: '/wiki/'},
-      {text: '运行', link: '/run/'},
+      { text: '指南', link: '/guide/' },
+      { text: 'wiki', link: '/wiki/' },
+      { text: '运行', link: '/run/' },
     ],
     editLinks: true,
     editLinkText: '在 GitHub 上编辑此页',
@@ -57,7 +59,9 @@ module.exports = {
             '/guide/desc',
             '/guide/api',
             '/guide/helpapi',
-          ]
+            '/guide/invoke',
+            '/guide/appRouter',
+          ],
         },
       ],
       '/wiki/': [
@@ -68,8 +72,8 @@ module.exports = {
           children: [
             '',
             // '/wiki/api',
-            '/wiki/router'
-          ]
+            '/wiki/router',
+          ],
         },
       ],
       '/run/': [
@@ -77,7 +81,7 @@ module.exports = {
           title: 'run',
           collapsable: false,
         },
-      ]
-    }
-  }
+      ],
+    },
+  },
 };
