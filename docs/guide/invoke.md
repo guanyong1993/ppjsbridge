@@ -6,7 +6,7 @@ sidebarDepth: 2
 
 ## openAppPage
 
-打开 app 原生页面，详见[app 原生页面](/guide/appRouter)
+打开 app 原生页面，详见[原生页面](/guide/appRouter/#原生页面路由)
 
 ## openIm
 
