@@ -168,11 +168,8 @@ PPJSBridge.invoke({
 });
 
 PPJSBridge.openWindow({
-  android: '/khpw/RoomDetailActivity_PaiDan',
-  ios: 'KHChatRoomViewController',
-  query: {
-    roomNo: 'TEST327000',
-  },
+  android: 'activity.DispatchRoomListActivity',
+  ios: 'KHSendOrderRoomListVC'
 });
 ```
 
