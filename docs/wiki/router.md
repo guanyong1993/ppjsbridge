@@ -252,6 +252,18 @@
         - 房间号
         :::
 
+## 进入派单厅
+
+- **android**：
+
+    - **url**：
+    `activity.DispatchRoomListActivity`
+    
+- **ios**：
+
+    - **url**：
+    `KHSendOrderRoomListVC`
+
 ## 图文动态详情
 
 - **android**：

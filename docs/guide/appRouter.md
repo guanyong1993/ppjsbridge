@@ -156,6 +156,26 @@ PPJSBridge.openWindow({
 });
 ```
 
+## 进入派单厅
+
+```js
+PPJSBridge.invoke({
+  cmd: 'func.openAppPage',
+  data: {
+    para:
+      '{"androidRoute":"activity.DispatchRoomListActivity","ios_route":"KHSendOrderRoomListVC"}',
+  },
+});
+
+PPJSBridge.openWindow({
+  android: '/khpw/RoomDetailActivity_PaiDan',
+  ios: 'KHChatRoomViewController',
+  query: {
+    roomNo: 'TEST327000',
+  },
+});
+```
+
 ## 用户主页(v1.3.3 及以上)
 
 ```js
