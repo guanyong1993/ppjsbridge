@@ -110,6 +110,8 @@ PPJSBridge.invoke({
   },
 });
 
+```
+
 ## openUploadImgs(v1.3.3 及以上)
 
 上传图片（多选）
@@ -117,7 +119,7 @@ PPJSBridge.invoke({
 
 - **类型**： `function`
 
-- **参数**：`[Number] max 最大可上传图片数量, 如最大可上传8张
+- **参数**：`[Number]` max 最大可上传图片数量, 如最大可上传8张
 
 - **返回值**：`Array` urls 图片地址集
 
