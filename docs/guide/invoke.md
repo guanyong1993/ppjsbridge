@@ -86,7 +86,7 @@ PPJSBridge.invoke({
 });
 ```
 
-## openUploadVideo
+## openImgCrop
 
 上传图片（裁剪）
 
@@ -109,6 +109,32 @@ PPJSBridge.invoke({
     }
   },
 });
+
+## openUploadImgs(v1.3.3 及以上)
+
+上传图片（多选）
+
+
+- **类型**： `function`
+
+- **参数**：`[Number] max 最大可上传图片数量, 如最大可上传8张
+
+- **返回值**：`Array` urls 图片地址集
+
+- **使用**：[在线测试](/run/#调用接口-invoke)
+
+```js
+PPJSBridge.invoke({
+  cmd: 'func.openImgCrop',
+  handle: (res) => {
+    const data = res.data || {};
+    if (res.action === 'success' && data) {
+      // data 图片文件地址
+    } else {
+    }
+  },
+});
+
 ```
 
 ## openUploadVideo
