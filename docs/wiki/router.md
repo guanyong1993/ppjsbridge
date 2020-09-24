@@ -241,6 +241,10 @@
         ::: params roomNo
         - 房间号
         :::
+        :::warning
+          android版本由于做了更改处理，在`1.7.3`版本以下时采用 `RoomDetailActivity_PaiDan?房间号`。
+          `1.7.3`版本以上(含)时使用参数格式`RoomDetailActivity_PaiDan?roomNo=房间号`。
+        :::
     
 - **ios**：
 
