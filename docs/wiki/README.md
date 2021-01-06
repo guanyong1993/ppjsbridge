@@ -147,6 +147,16 @@
     ::::: paramsName {string} data.copy
     - 原生分享弹窗中，点击`复制`按钮所获取的网址
     :::::
+
+    ::::: paramsName {string=} data.appFriendH5
+    - 如果需要在分享的控件中出现，`皮皮好友` 内部IM的好友分享,需要传递标准的路由格式，传递如下格式的字符串，路由形式不限，可以是`H5页面`也可以是`原生页面路由`
+      ```js
+      JSON.stringify({
+          androidRoute:`WebViewActivity?url=${userUrl}?${window.getStitchingUrlParams({ ...params,hideNavi:1 })}`,
+          ios_route:`FLWebPageViewController?urlString=${userUrl}&${window.getStitchingUrlParams({ ...params,hideNavi:1 })}`
+      })
+      ```
+    :::::
     
 ## 保存图片到相册
 
