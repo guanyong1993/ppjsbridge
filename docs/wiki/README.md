@@ -10,6 +10,10 @@
     
     - **data** 接口依赖参数，所有接口参数类型为 object。对应 invoke 方法中 options 参数的 version 属性
 
+    - **handle:({data})**: 表示原生接口有通知回调给H5页面，仅`res.action='success'`时，`data`才有值返回
+      
+    - **handle:({action})**: 表示原生接口有通知回调给H5页面，仅 `res.action`成功或失败回调通知
+
 :::
 
 ## 拉起原生微信支付
@@ -174,6 +178,8 @@
     - 图片的url地址
     :::::  
 
+- **handle:({action})**:
+
 
 ## FM开通守护
 ::: tip 支持系统
@@ -229,3 +235,144 @@
     ::::    paramsName {Object} 巡管操作后接口返回的数据
     - 接口发挥数据
     :::::
+
+## 打开IM聊天窗口
+::: tip 支持系统
+**Android**
+**iOS**
+:::
+
+- **cmd**：  
+`func.openIm`
+
+- **data**:  
+  ::::    paramsName {string} data.imId
+  - 用户imId
+    :::::
+
+  ::::    paramsName {string} data.nickname
+  - 接收人的用户昵称
+    :::::
+
+## 录音功能
+::: tip 支持系统
+**Android**
+**iOS**
+:::
+
+- **cmd**：  
+  `func.openRecord`
+
+- **data**:  
+  ::::    paramsName {number} data.maxTime
+  - 录音最长时间（单位s）
+    :::::
+
+  ::::    paramsName {string} data.tip
+  - 录音的提示文案
+    :::::
+
+  ::::    paramsName {number} data.minTime
+  - 录音最短时间（单位s）
+    :::::
+
+- **handle:({data})**:  
+  ::::    paramsName {string} data.url
+  - 录音文件地址
+    :::::
+
+  ::::    paramsName {string} data.duration
+  - 录音文件时长
+    :::::
+
+## 绑定手机号
+::: tip 支持系统
+**Android**
+**iOS**
+:::
+
+- **cmd**：  
+  `func.bindMobile`
+
+- **handle:({action})**:  
+
+## 上传图片（裁剪）
+::: tip 支持系统
+**Android**
+**iOS**
+:::
+
+- **cmd**：  
+  `func.openImgCrop`
+
+- **data**:  
+  ::::    paramsName {number} data.maxTime
+  - 录音最长时间（单位s）
+    :::::
+
+  ::::    paramsName {string} data.tip
+  - 录音的提示文案
+    :::::
+
+  ::::    paramsName {number} data.minTime
+  - 录音最短时间（单位s）
+    :::::
+
+- **handle:({data})**:  
+  ::::    paramsName {string} data.message
+  - 参见后的文件地址
+  :::::
+
+## 上传图片（多选）
+::: tip 支持系统
+**Android**
+**iOS**
+:::
+
+- **cmd**：  
+  `func.openUploadImgs`
+
+- **data**:  
+  ::::    paramsName {number} data.max
+  - 每次打开项目可选择上传最大图片数量, 如最大可上传8张
+    :::::
+
+- **handle:({data})**:  
+  ::::    paramsName {array} data.urls
+  - 上传后的图片文件地址
+    :::::
+
+## 上传视频
+::: tip 支持系统
+**Android**
+**iOS**
+:::
+
+- **cmd**：  
+  `func.openUploadVideo`
+
+- **handle:({data})**:  
+  ::::    paramsName {string} data.url
+  - 视频文件地址
+    :::::
+
+  ::::    paramsName {string} data.duration
+  - 视频文件时长
+    :::::
+
+## 支付宝实名认证
+::: tip 支持系统
+**Android**
+**iOS**
+:::
+
+- **cmd**：  
+  `func.openAuthentication`
+
+- **data**:
+  ::::    paramsName {string} data.url
+  - 认证的url地址
+    :::warning 注意
+    url 参数调用接口获取/api/v2/user/get-ali-url，在支付宝完成实名认证之后需要在调用一次接口/api/v2/user/check-body-auth，已完成整个实名认证流程
+    :::
+  :::::

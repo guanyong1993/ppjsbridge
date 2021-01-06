@@ -12,7 +12,7 @@ sidebarDepth: 2
 ::: tip 调用约定
 - 如未特殊约定，options 对象中必须包含一个 string 类型的 cmd 的属性值，该值是app端开发给页面的接口名称。
 
-- options 对象中 可以指定 success / fail / complete 来接收接口调用结果；还有一个可选参数是 function 类型的 handle，作为回调函数等同于 options.complete。`不是每个接口都有成功的回调，具体情况根据接口需要而定`
+- options 对象中 可以指定 `success / fail / complete` 来接收接口调用结果；还有一个可选参数是 `function` 类型的 `handle`，作为回调函数等同于 `options.complete`。`不是每个接口都有成功的回调，具体情况根据接口需要而定`
 
 - 每个回调函数都会接收两个参数，两个参数类型为 `object`，返回格式请看[回调约定](../guide/desc.html#回调约定)
 :::

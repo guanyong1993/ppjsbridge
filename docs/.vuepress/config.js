@@ -52,15 +52,12 @@ module.exports = {
           sidebarDepth: 5,
           children: [
             '',
-            // '/guide/about',
             '/guide/install',
             '/guide/use',
             '/guide/change',
             '/guide/desc',
             '/guide/api',
-            '/guide/helpapi',
-            '/guide/invoke',
-            '/guide/appRouter',
+            '/guide/helpapi'
           ],
         },
       ],
@@ -71,7 +68,6 @@ module.exports = {
           sidebarDepth: 5,
           children: [
             '',
-            // '/wiki/api',
             '/wiki/router',
           ],
         },

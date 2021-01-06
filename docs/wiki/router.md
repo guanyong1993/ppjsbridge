@@ -91,7 +91,7 @@
 - **android**：
 
     - **url**：
-    `JieDanSheZhiActivity_New`
+    `/khpw/JieDanSheZhiActivity_New`
 
 - **android**：
 
@@ -175,7 +175,7 @@
 - **android**：
 
     - **url**：
-    `DaShou_OrderListActivity`
+    `/khpw/DaShou_OrderListActivity`
     
 - **ios**：
 
@@ -288,3 +288,50 @@
         :::params dynamicId
         - 动态ID
         :::
+
+## 下单记录
+
+- **android**：
+
+    - **url**：
+      
+      `/khpw/MyOrderListActivity`
+
+- **ios**：
+
+    - **url**：
+      
+      `KHUserOrderListController`
+
+## 品类
+
+- **android**：
+
+    - **url**：
+      `category.CategoryListActivity`
+
+    - **query**：
+      :::params categoryName
+        - 品类名称
+      :::
+      :::params categoryId
+        - 品类ID
+      :::
+      :::params icon
+      - 品类图标
+      :::
+
+- **ios**：
+
+    - **url**：
+      `KHGameCenterController`
+    - **query**：
+      :::params categoryName
+        - 品类名称
+      :::
+      :::params categoryId
+        - 品类ID
+      :::
+      :::params icon
+        - 品类图标
+      :::
