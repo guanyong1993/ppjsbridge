@@ -2,7 +2,7 @@ const pkg = require('../../package');
 module.exports = {
   title: 'PPJSBridge',
   base: '/' + pkg.aliasOSS + '/docs/',
-  description: '皮皮PiPi App (iOS/Android) JSBridge API ',
+  description: '皮皮陪玩 App (iOS/Android) JSBridge API ',
   plugins: [
     ['@vuepress/active-header-links'],
     ['@vuepress/back-to-top'],

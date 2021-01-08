@@ -1,6 +1,6 @@
 <template>
     <div v-if="isPiPiApp" style="border: 1px solid #f5f5f5;margin-top: 40px;">
-        <h2 style="text-align: center;padding-bottom: 20px;">**皮皮PiPi App**</h2>
+        <h2 style="text-align: center;padding-bottom: 20px;">**皮皮陪玩 App**</h2>
         <div style="padding: 4px;padding-bottom: 0;border-bottom: 0;margin-bottom: 10px;border-bottom: 1px solid #f5f5f5;padding-bottom: 10px;">
             <p style="padding-left: 5px">token：</p>
             <p style="font-weight: bold">{{token}}</p>

@@ -23,10 +23,10 @@ const formatWebviewRouterUrl = function (url, platform) {
  * 打开一个新窗口，加载 (原生/web) 网址
  * @param {object} params
  * @param {string=} params.version  -- 版本号
- * @param {string|object} params.ios  -- 皮皮pipi ios 链接
+ * @param {string|object} params.ios  -- 皮皮陪玩 ios 链接
  * @param {string} params.query  -- android & ios 原生路由地址的共同参数
  * @param {string=} params.url  -- 如果传递了此参数，代表在 app 的环境中打开新的窗口是加载这个链接，ios & android 参数将失效
- * @param {string |object} params.android  -- 皮皮pipi  android 链接
+ * @param {string |object} params.android  -- 皮皮陪玩  android 链接
  * @param {string} params.href -- 非app环境下，如果传递了链接，会进行打开
  * @param {handle} params.handle -- 回调
  */
