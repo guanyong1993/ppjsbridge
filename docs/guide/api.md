@@ -235,7 +235,7 @@ sidebarDepth: 2
       // 发现相同属性的值需要写2次，而且一旦 data 的key 变更，我们还需要改两次
       PPJSBridge.openWindow({
           ios:`KHCardViewController?uid=${data.userId}`,
-          android:`UserDetailActivity?userId=${data.userId}`,
+          android:`/khpw/UserDetailActivity?userId=${data.userId}`,
       })
   
       // 可以采用以下的写法

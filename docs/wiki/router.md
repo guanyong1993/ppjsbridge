@@ -38,7 +38,7 @@
 - **android**：
 
     - **url**：
-    `UserDetailActivity`
+    `/khpw/UserDetailActivity`
     
     - **query**：
         ::::: params uid
