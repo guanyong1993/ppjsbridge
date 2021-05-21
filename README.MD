@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://app.apeiwan.com" target="_blank" rel="noopener noreferrer">
-    <img width="100" src="https://h5-public.apeiwan.com/library/assets/images/touch/touch-icon-120.png" alt="PiPi logo">
+    <img width="100" src="https://h5-public.apeiwan.com/library/assets/images/touch/logo_256%EF%BC%8A256.png" alt="PiPi logo">
     </a>
 </p>
 
