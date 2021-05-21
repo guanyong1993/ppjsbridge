@@ -4,13 +4,11 @@ const ossUpload = require('../oss/oss.upload');
 const pkg = require('../package');
 const path = require('path');
 const minimist = require('minimist');
-
-let options = minimist(process.argv.slice(2));
+const config = require('./config')
 
 const prefix = pkg.aliasOSS + '/docs';
 const dist = path.resolve(process.cwd(), 'docs/.vuepress/dist');
 
-ossUpload({
-  prefix,
-  dist
-});
+if (exec(`scp -r  ${dist}/** ${config.server.docs}`).code === 0) {
+  console.log('文档上传完毕')
+}
