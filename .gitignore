@@ -4,5 +4,5 @@ node_modules
 *.log
 .vscode
 temp
-oss
+oss/config.js
 docs/.vuepress/dist
