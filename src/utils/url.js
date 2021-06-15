@@ -2,7 +2,7 @@
  * 将JSON对象拼接成GET URL形式参数
  * @param {object} params
  * @param {string=} symbol - 链接符号 默认'&'
- * @returns {string}
+ * @returns {string} -参数链接的字符地址
  */
 export const getStitchingUrlParams = function (params, symbol = '&') {
   let strParams = '';
@@ -16,27 +16,38 @@ export const getStitchingUrlParams = function (params, symbol = '&') {
 };
 
 /**
+ * 给 url 添加参数
+ * @param {string} url
+ * @param {string=} stitchingUrlParams
+ * @return {string} - 格式化后的url
+ */
+export const addUrlParams = function (url, stitchingUrlParams) {
+  let paramsPrefix = url.indexOf('?') !== -1 ? '&' : '?';
+  return url + (stitchingUrlParams ? paramsPrefix : '') + stitchingUrlParams;
+}
+
+/**
  * 获取url的hash和search值
  * @param {string} [url=window.location.href] url
- * @returns {{hash_str:string,search_str:string}}
+ * @returns {{hashStr:string,searchStr:string}}
  * */
 export const getUrlHashSearchStr = function (url) {
-  let hash_str = window.location.hash;
-  let search_str = window.location.search;
+  let hashStr = window.location.hash;
+  let searchStr = window.location.search;
   if (url) {
-    let url_hash_index = url.indexOf('#');
-    let url_search_index = url.indexOf('?');
-    hash_str = url_hash_index !== -1 ? url.substr(url_hash_index) : '';
-    if (url_search_index < url_hash_index || (url_search_index !== -1 && url_hash_index === -1)) {
-      let length = url_search_index < url_hash_index ? url_hash_index - url_search_index : url.length;
-      search_str = url.substr(url_search_index, length);
+    let urlHashIndex = url.indexOf('#');
+    let urlSearchIndex = url.indexOf('?');
+    hashStr = urlHashIndex !== -1 ? url.substr(urlHashIndex) : '';
+    if (urlSearchIndex < urlHashIndex || (urlSearchIndex !== -1 && urlHashIndex === -1)) {
+      let length = urlSearchIndex < urlHashIndex ? urlHashIndex - urlSearchIndex : url.length;
+      searchStr = url.substr(urlSearchIndex, length);
     } else {
-      search_str = '';
+      searchStr = '';
     }
   }
   return {
-    hash_str: hash_str,
-    search_str: search_str
+    hashStr: hashStr,
+    searchStr: searchStr
   };
 };
 
@@ -52,27 +63,27 @@ export const getRequestUrlParam = function (url, splitStr = '?') {
     url = url.substr(0, splitStrIndex) + '?' + url.substr(splitStrIndex);
   }
   let urlHashSearchStr = getUrlHashSearchStr(url);
-  let hash_str = urlHashSearchStr.hash_str;
-  let search_str = urlHashSearchStr.search_str;
-  let hash_str_params_index = hash_str.indexOf('?');
-  hash_str = hash_str_params_index !== -1 ? hash_str.substr(hash_str_params_index + 1) + '&' : '';
-  let search_str_params_index = search_str.indexOf('?');
-  if (search_str_params_index !== -1) {
-    search_str = search_str.substr(search_str_params_index + 1);
+  let hashStr = urlHashSearchStr.hashStr;
+  let searchStr = urlHashSearchStr.searchStr;
+  let hashStrParamsIndex = hashStr.indexOf('?');
+  hashStr = hashStrParamsIndex !== -1 ? hashStr.substr(hashStrParamsIndex + 1) + '&' : '';
+  let searchStrParamsIndex = searchStr.indexOf('?');
+  if (searchStrParamsIndex !== -1) {
+    searchStr = searchStr.substr(searchStrParamsIndex + 1);
   }
   let getRequestUrlParams = {};
-  if (hash_str_params_index !== -1 || search_str_params_index !== -1) {
-    let params_format_url = (hash_str + search_str).split("&");
-    for (let i = 0; i < params_format_url.length; i++) {
-      let param = params_format_url[i].split("=");
+  if (hashStrParamsIndex !== -1 || searchStrParamsIndex !== -1) {
+    let paramsFormatUrl = (hashStr + searchStr).split("&");
+    for (let i = 0; i < paramsFormatUrl.length; i++) {
+      let param = paramsFormatUrl[i].split("=");
       if (param[0]) {
-        let _value = '';
+        let value = '';
         try {
-          _value = decodeURIComponent(param[1]);
+          value = decodeURIComponent(param[1]);
         } catch (e) {
-          _value = param[1];
+          value = param[1];
         }
-        getRequestUrlParams[param[0]] = _value;
+        getRequestUrlParams[param[0]] = value;
       }
     }
   }
