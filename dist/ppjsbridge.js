@@ -1,8 +1,8 @@
-/*!@apeiwan/ppjsbridge released@0.1.1*/
+/*!@apeiwan/ppjsbridge beta@0.1.2*/
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.PPJSBridge = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.PPJSBridge = factory());
 }(this, (function () { 'use strict';
 
   function _typeof(obj) {
@@ -598,7 +598,7 @@
       };
 
       // Expose the class either via AMD, CommonJS or the global object
-      if ( module.exports){
+      if (module.exports){
           module.exports = EventEmitter;
       }
       else {
@@ -761,8 +761,14 @@
 
   /**
    * 返回指定调用的回调参数
-   * @param res
-   * @param params
+   * @param {object} res
+   * @param {string} res.action
+   * @param {string} res.message
+   * @param {object=} res.data
+   * @param {object} params
+   * @param {function} params.handle
+   * @param {function} params.fail
+   * @param {function} params.complete
    */
 
   var handleOptions = function handleOptions(res) {
@@ -807,6 +813,10 @@
     }
 
     if (handleErrorResult.action) {
+      if (window._PPJSBridge_.console) {
+        console.warn(':::PPJSBridge发送命令失败:::', params.cmd, params);
+      }
+
       handleOptions(handleErrorResult, params);
       return false;
     }
@@ -837,6 +847,10 @@
       cmd = cmd[0];
     }
 
+    if (window._PPJSBridge_.console) {
+      console.warn(':::PPJSBridge命令发送成功:::', params.cmd, params);
+    }
+
     if (os === 'ios') {
       return window.webkit.messageHandlers[cmd].postMessage(options);
     } else if (os === 'android') {
@@ -865,6 +879,10 @@
 
       if ((cmd === 'func.ready' || cmd === 'func.login') && !window.FLPPJSBridge) {
         window.FLPPJSBridge = res.data;
+      }
+
+      if (window._PPJSBridge_.console) {
+        console.warn(':::PPJSBridge收到App回调:::', cmd, res);
       }
 
       handleOptions(res, params); //  为了释放uuid 的方法的内容，在方法得到响应后释放内存
@@ -930,6 +948,17 @@
     }
 
     return strParams ? strParams.substr(0, strParams.length - 1) : "";
+  };
+  /**
+   * 给 url 添加参数
+   * @param {string} url
+   * @param {string=} stitchingUrlParams
+   * @return {*}
+   */
+
+  var addUrlParams = function addUrlParams(url, stitchingUrlParams) {
+    var params_prefix = url.indexOf('?') !== -1 ? '&' : '?';
+    return url + (stitchingUrlParams ? params_prefix : '') + stitchingUrlParams;
   };
   /**
    * 获取url的hash和search值
@@ -1018,7 +1047,9 @@
       login: 'func.login',
       back: 'func.goBack',
       ready: 'func.ready',
-      openAppPage: 'func.openAppPage'
+      openAppPage: 'func.openAppPage',
+      share: 'func.share',
+      closeBounce: 'func.closeBounce'
     }
   };
 
@@ -1143,98 +1174,193 @@
    * 打开一个新窗口，加载 (原生/web) 网址
    * @param {object} params
    * @param {string=} params.version  -- 版本号
-   * @param {string|object} params.ios  -- 皮皮pipi ios 链接
+   * @param {string|object} params.ios  -- 皮皮陪玩 ios 链接
    * @param {string} params.query  -- android & ios 原生路由地址的共同参数
    * @param {string=} params.url  -- 如果传递了此参数，代表在 app 的环境中打开新的窗口是加载这个链接，ios & android 参数将失效
-   * @param {string |object} params.android  -- 皮皮pipi  android 链接
+   * @param {string |object} params.android  -- 皮皮陪玩  android 链接
    * @param {string} params.href -- 非app环境下，如果传递了链接，会进行打开
    * @param {handle} params.handle -- 回调
    */
 
 
   var openWindow = function openWindow(params) {
-    if (isPiPiApp) {
-      var version = params.version || '';
-      var versionSystem = {};
-      var androidQuery = {};
-      var iOSQuery = {};
-      var iOSUrl = params.ios;
-      var androidUrl = params.android;
+    var version = params.version || '';
+    var versionSystem = {};
+    var androidQuery = {};
+    var iOSQuery = {};
+    var iOSUrl = params.ios;
+    var androidUrl = params.android;
 
-      if (_typeof(params.android) === 'object') {
-        versionSystem['android'] = params.android.version || '';
-        androidQuery = params.android.query || {};
-        androidUrl = params.android.url;
-      }
-
-      if (_typeof(params.ios) === 'object') {
-        versionSystem['ios'] = params.ios.version || '';
-        iOSQuery = params.ios.query || {};
-        iOSUrl = params.ios.url;
-      }
-
-      version = version || versionSystem;
-
-      var addUrlParams = function addUrlParams(url, stitchingUrlParams) {
-        var symbol = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '&';
-        var params_prefix = url.indexOf('?') !== -1 ? symbol : '?';
-        return url + (stitchingUrlParams ? params_prefix : '') + stitchingUrlParams;
-      };
-
-      if (params.url) {
-        var webUrl = params.url;
-        iOSUrl = 'FLWebPageViewController?urlString=' + formatWebviewRouterUrl(webUrl, 'ios');
-        androidUrl = 'WebViewActivity?url=' + formatWebviewRouterUrl(webUrl, 'android');
-      }
-
-      var formatNativeQuery = function formatNativeQuery() {
-        var query = params.query;
-        var formatQuery = {};
-        var routeOSQuery = {
-          ios: {},
-          android: {}
-        };
-
-        for (var key in query) {
-          var _key = key + '';
-
-          if (_key.indexOf('[') !== -1) {
-            var paramsAry = _key.substr(1, _key.length - 2).split(',');
-
-            for (var i = 0; i < paramsAry.length; i++) {
-              var _paramsAry$i$split = paramsAry[i].split(':'),
-                  _paramsAry$i$split2 = _slicedToArray(_paramsAry$i$split, 2),
-                  _os = _paramsAry$i$split2[0],
-                  name = _paramsAry$i$split2[1];
-
-              routeOSQuery[_os][name] = query[key];
-            }
-          } else {
-            formatQuery[key] = query[key];
-          }
-        }
-
-        return _objectSpread2({}, formatQuery, {}, routeOSQuery[os]);
-      };
-
-      return invoke({
-        version: version,
-        data: {
-          para: JSON.stringify({
-            ios: {
-              ios_route: addUrlParams(iOSUrl, getStitchingUrlParams(_objectSpread2({}, iOSQuery, {}, formatNativeQuery())))
-            },
-            android: {
-              androidRoute: addUrlParams(androidUrl, getStitchingUrlParams(_objectSpread2({}, androidQuery, {}, formatNativeQuery())))
-            }
-          }[os])
-        },
-        cmd: InvokeTypes.func.openAppPage,
-        handle: params.handle
-      });
-    } else if (params.href) {
-      window.location.href = params.href;
+    if (_typeof(params.android) === 'object') {
+      versionSystem['android'] = params.android.version || '';
+      androidQuery = params.android.query || {};
+      androidUrl = params.android.url;
     }
+
+    if (_typeof(params.ios) === 'object') {
+      versionSystem['ios'] = params.ios.version || '';
+      iOSQuery = params.ios.query || {};
+      iOSUrl = params.ios.url;
+    }
+
+    version = version || versionSystem;
+
+    var addUrlParams = function addUrlParams(url, stitchingUrlParams) {
+      var symbol = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '&';
+      var params_prefix = url.indexOf('?') !== -1 ? symbol : '?';
+      return url + (stitchingUrlParams ? params_prefix : '') + stitchingUrlParams;
+    };
+
+    if (params.url) {
+      var webUrl = params.url;
+      iOSUrl = 'FLWebPageViewController?urlString=' + formatWebviewRouterUrl(webUrl, 'ios');
+      androidUrl = 'WebViewActivity?url=' + formatWebviewRouterUrl(webUrl, 'android');
+    }
+
+    var formatNativeQuery = function formatNativeQuery() {
+      var query = params.query;
+      var formatQuery = {};
+      var routeOSQuery = {
+        ios: {},
+        android: {}
+      };
+
+      for (var key in query) {
+        var _key = key + '';
+
+        if (_key.indexOf('[') !== -1) {
+          var paramsAry = _key.substr(1, _key.length - 2).split(',');
+
+          for (var i = 0; i < paramsAry.length; i++) {
+            var _paramsAry$i$split = paramsAry[i].split(':'),
+                _paramsAry$i$split2 = _slicedToArray(_paramsAry$i$split, 2),
+                _os = _paramsAry$i$split2[0],
+                name = _paramsAry$i$split2[1];
+
+            routeOSQuery[_os][name] = query[key];
+          }
+        } else {
+          formatQuery[key] = query[key];
+        }
+      }
+
+      return _objectSpread2({}, formatQuery, {}, routeOSQuery[os]);
+    };
+
+    return invoke({
+      version: JSON.stringify(version) === '{}' ? '' : version,
+      data: {
+        para: JSON.stringify({
+          ios: {
+            ios_route: addUrlParams(iOSUrl, getStitchingUrlParams(_objectSpread2({}, iOSQuery, {}, formatNativeQuery())))
+          },
+          android: {
+            androidRoute: addUrlParams(androidUrl, getStitchingUrlParams(_objectSpread2({}, androidQuery, {}, formatNativeQuery())))
+          }
+        }[os])
+      },
+      cmd: InvokeTypes.func.openAppPage,
+      fail: function fail(res) {
+        if (res.action === 'notApp' && params.href) {
+          window.location.href = params.href;
+        }
+      },
+      handle: params.handle
+    });
+  };
+
+  var DEFAULT_CONFIG = {
+    console: false,
+    project: window.location.href
+  };
+  window['_PPJSBridge_'] = DEFAULT_CONFIG;
+  /**
+   *
+   * @param {object} params
+   * @param {boolean=} params.console
+   * @param {string=} params.project
+   */
+
+  var init = function init() {
+    var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var jsBridge = document.getElementById('PPJSBridge');
+    var console = DEFAULT_CONFIG.console;
+    var project;
+
+    if (jsBridge) {
+      project = jsBridge.getAttribute('project');
+      console = jsBridge.getAttribute('console');
+
+      if (typeof console === 'string') {
+        console = console.indexOf('production') !== -1 ? false : Boolean(console);
+      }
+    }
+
+    project = project || DEFAULT_CONFIG.project;
+    console = params.console === undefined ? console : params.console;
+    window['_PPJSBridge_'] = _objectSpread2({}, window['_PPJSBridge_'], {
+      console: console,
+      project: project
+    });
+  };
+
+  init();
+
+  /**
+   * 站外分享url设定的 key
+   * @type {string}
+   */
+
+  var APP_SHARE_URL_KEY = '_ppjsbridge_shareurl_';
+  /**
+   * 初始化时，需要判断是否在app环境内打开了站外分享的链接，
+   */
+
+  (function () {
+    var params = getRequestUrlParam();
+
+    if (params[APP_SHARE_URL_KEY] && !isPiPiApp) {
+      window.location.replace(params[APP_SHARE_URL_KEY]);
+    }
+  })();
+  /**
+   * 分享
+   * @param {object} params
+   * @param {string} params.url  -- 分享出去用户打开的url链接
+   * @param {string=} params.copy  -- 分享浮层中，点击 `复制链接` 的url,如果不传默认用的 `url`参数
+   * @param {string} params.content  -- 分享的标题
+   * @param {string} params.title  -- 分享的内容
+   * @param {string} params.image  -- 分享的图片,300*300 jpg格式，不要圆角
+   * @param {object} setting
+   * @param {string=} setting.appOpenUrl -- app内打开的url，有一些是把分享的url给内部分享，会导致打开的是站外的页面，需要处理一下
+   */
+
+
+  var share = function share(params, setting) {
+    var data = params.data;
+
+    var options = _objectSpread2({}, data, {
+      copy: data.copy || data.url
+    });
+
+    if (setting.appOpenUrl) {
+      options['copy'] = addUrlParams(setting.appOpenUrl, getStitchingUrlParams(_defineProperty({}, APP_SHARE_URL_KEY, options['copy'])));
+      options['url'] = addUrlParams(setting.appOpenUrl, getStitchingUrlParams(_defineProperty({}, APP_SHARE_URL_KEY, options['url'])));
+    }
+
+    params['data'] = options;
+    invoke(_objectSpread2({
+      cmd: InvokeTypes.func.share
+    }, params));
+  };
+  /**
+   * 格式化分享的url,针对有一些需要格式化处理
+   * @param shareUrl {string} -- 分享的URl
+   * @param appOpenUrl {string} -- 在app内打开的url
+   */
+
+  var getFormatShareUrl = function getFormatShareUrl(shareUrl, appOpenUrl) {
+    return addUrlParams(appOpenUrl, getStitchingUrlParams(_defineProperty({}, APP_SHARE_URL_KEY, shareUrl)));
   };
 
   /**
@@ -1262,7 +1388,11 @@
     isLogin: isLogin,
     back: back,
     getStitchingUrlParams: getStitchingUrlParams,
-    getRequestUrlParam: getRequestUrlParam
+    getRequestUrlParam: getRequestUrlParam,
+    addUrlParams: addUrlParams,
+    share: share,
+    getFormatShareUrl: getFormatShareUrl,
+    init: init
   };
 
   return index;
