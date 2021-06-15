@@ -1,6 +1,6 @@
 import InvokeTypes from "../utils/invoke.types";
 import invoke from './invoke'
-import {isPiPiApp, os} from '../utils/constant'
+import {os} from '../utils/constant'
 import {getRequestUrlParam, getStitchingUrlParams} from "../utils/url";
 
 /**
