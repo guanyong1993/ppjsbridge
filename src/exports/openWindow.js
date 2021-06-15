@@ -31,7 +31,7 @@ const formatWebviewRouterUrl = function (url, platform) {
  * @param {handle} params.handle -- 回调
  */
 let openWindow = function (params) {
-  if (isPiPiApp) {
+  if (!params.href) {
     let version = params.version || '';
     let versionSystem = {};
     let androidQuery = {};
@@ -95,7 +95,7 @@ let openWindow = function (params) {
       cmd: InvokeTypes.func.openAppPage,
       handle: params.handle
     });
-  } else if (params.href) {
+  } else {
     window.location.href = params.href;
   }
 };
