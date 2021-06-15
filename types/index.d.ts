@@ -75,6 +75,49 @@ declare namespace PPJSBridge {
     }
 
     /**
+     * 初始化时的选项
+     */
+    interface initOptions {
+        /**
+         * 是否开启日志打印选项
+         */
+        console?: boolean
+    }
+
+    /**
+     * 分享的选项
+     */
+    interface shareOptions {
+        /**
+         * 分享的url
+         */
+        url: string,
+        /**
+         * 点击分享面板-复制-按钮的的url，如果此项无值，默认取 url 值
+         */
+        copy?: string,
+        /**
+         * 分享的内容
+         */
+        content: string,
+        /**
+         * 分享时的标题
+         */
+        title: string,
+        /**
+         * 分享时的图片地址
+         */
+        image: string
+    }
+
+    /**
+     * 分享时单独设立的app内打开的url
+     */
+    interface shareSetting {
+        appOpenUrl?: string,
+    }
+
+    /**
      * 打开页面的url选项
      */
     interface openWindowOptionsUrlOptions {
@@ -148,6 +191,32 @@ declare namespace PPJSBridge {
          * 判断是否支持版本号
          */
         isCanIUse(version: version): boolean,
+
+        /**
+         * 初始化PPJSBridge
+         */
+        init(options: initOptions): void
+
+        /**
+         * 分享功能
+         */
+        share(options: shareOptions, settingOptions?: shareSetting): void
+
+        /**
+         * 获取url参数
+         */
+        getStitchingUrlParams(params: object, symbol?: string): object
+
+        /**
+         * 给指定的url网址添加参数
+         */
+        addUrlParams(url: string, stitchingUrlParams?: string): string
+
+        /**
+         * 获取 url 参数
+         * @param url
+         */
+        getRequestUrlParam(url: string): string
     }
 
     /**
