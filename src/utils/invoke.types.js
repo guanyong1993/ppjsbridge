@@ -8,6 +8,7 @@ let InvokeTypes = {
     back: 'func.goBack',
     ready: 'func.ready',
     openAppPage: 'func.openAppPage',
+    share: 'func.share'
   }
 };
 
