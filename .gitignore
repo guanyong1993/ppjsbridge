@@ -7,3 +7,4 @@ temp
 dist
 oss/config.js
 docs/.vuepress/dist
+/dist/

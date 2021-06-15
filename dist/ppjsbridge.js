@@ -1,4 +1,4 @@
-/*!@apeiwan/ppjsbridge beta@0.1.2*/
+/*!@apeiwan/ppjsbridge beta@0.1.1*/
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -933,7 +933,7 @@
    * 将JSON对象拼接成GET URL形式参数
    * @param {object} params
    * @param {string=} symbol - 链接符号 默认'&'
-   * @returns {string}
+   * @returns {string} -参数链接的字符地址
    */
   var getStitchingUrlParams = function getStitchingUrlParams(params) {
     var symbol = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '&';
@@ -953,39 +953,39 @@
    * 给 url 添加参数
    * @param {string} url
    * @param {string=} stitchingUrlParams
-   * @return {*}
+   * @return {string} - 格式化后的url
    */
 
   var addUrlParams = function addUrlParams(url, stitchingUrlParams) {
-    var params_prefix = url.indexOf('?') !== -1 ? '&' : '?';
-    return url + (stitchingUrlParams ? params_prefix : '') + stitchingUrlParams;
+    var paramsPrefix = url.indexOf('?') !== -1 ? '&' : '?';
+    return url + (stitchingUrlParams ? paramsPrefix : '') + stitchingUrlParams;
   };
   /**
    * 获取url的hash和search值
    * @param {string} [url=window.location.href] url
-   * @returns {{hash_str:string,search_str:string}}
+   * @returns {{hashStr:string,searchStr:string}}
    * */
 
   var getUrlHashSearchStr = function getUrlHashSearchStr(url) {
-    var hash_str = window.location.hash;
-    var search_str = window.location.search;
+    var hashStr = window.location.hash;
+    var searchStr = window.location.search;
 
     if (url) {
-      var url_hash_index = url.indexOf('#');
-      var url_search_index = url.indexOf('?');
-      hash_str = url_hash_index !== -1 ? url.substr(url_hash_index) : '';
+      var urlHashIndex = url.indexOf('#');
+      var urlSearchIndex = url.indexOf('?');
+      hashStr = urlHashIndex !== -1 ? url.substr(urlHashIndex) : '';
 
-      if (url_search_index < url_hash_index || url_search_index !== -1 && url_hash_index === -1) {
-        var length = url_search_index < url_hash_index ? url_hash_index - url_search_index : url.length;
-        search_str = url.substr(url_search_index, length);
+      if (urlSearchIndex < urlHashIndex || urlSearchIndex !== -1 && urlHashIndex === -1) {
+        var length = urlSearchIndex < urlHashIndex ? urlHashIndex - urlSearchIndex : url.length;
+        searchStr = url.substr(urlSearchIndex, length);
       } else {
-        search_str = '';
+        searchStr = '';
       }
     }
 
     return {
-      hash_str: hash_str,
-      search_str: search_str
+      hashStr: hashStr,
+      searchStr: searchStr
     };
   };
   /**
@@ -1004,34 +1004,34 @@
     }
 
     var urlHashSearchStr = getUrlHashSearchStr(url);
-    var hash_str = urlHashSearchStr.hash_str;
-    var search_str = urlHashSearchStr.search_str;
-    var hash_str_params_index = hash_str.indexOf('?');
-    hash_str = hash_str_params_index !== -1 ? hash_str.substr(hash_str_params_index + 1) + '&' : '';
-    var search_str_params_index = search_str.indexOf('?');
+    var hashStr = urlHashSearchStr.hashStr;
+    var searchStr = urlHashSearchStr.searchStr;
+    var hashStrParamsIndex = hashStr.indexOf('?');
+    hashStr = hashStrParamsIndex !== -1 ? hashStr.substr(hashStrParamsIndex + 1) + '&' : '';
+    var searchStrParamsIndex = searchStr.indexOf('?');
 
-    if (search_str_params_index !== -1) {
-      search_str = search_str.substr(search_str_params_index + 1);
+    if (searchStrParamsIndex !== -1) {
+      searchStr = searchStr.substr(searchStrParamsIndex + 1);
     }
 
     var getRequestUrlParams = {};
 
-    if (hash_str_params_index !== -1 || search_str_params_index !== -1) {
-      var params_format_url = (hash_str + search_str).split("&");
+    if (hashStrParamsIndex !== -1 || searchStrParamsIndex !== -1) {
+      var paramsFormatUrl = (hashStr + searchStr).split("&");
 
-      for (var i = 0; i < params_format_url.length; i++) {
-        var param = params_format_url[i].split("=");
+      for (var i = 0; i < paramsFormatUrl.length; i++) {
+        var param = paramsFormatUrl[i].split("=");
 
         if (param[0]) {
-          var _value = '';
+          var value = '';
 
           try {
-            _value = decodeURIComponent(param[1]);
+            value = decodeURIComponent(param[1]);
           } catch (e) {
-            _value = param[1];
+            value = param[1];
           }
 
-          getRequestUrlParams[param[0]] = _value;
+          getRequestUrlParams[param[0]] = value;
         }
       }
     }
@@ -1048,8 +1048,7 @@
       back: 'func.goBack',
       ready: 'func.ready',
       openAppPage: 'func.openAppPage',
-      share: 'func.share',
-      closeBounce: 'func.closeBounce'
+      share: 'func.share'
     }
   };
 
@@ -1270,25 +1269,21 @@
   };
 
   var DEFAULT_CONFIG = {
-    console: false,
-    project: window.location.href
+    console: false
   };
   window['_PPJSBridge_'] = DEFAULT_CONFIG;
   /**
-   *
+   * PPJSBridge初始化
    * @param {object} params
    * @param {boolean=} params.console
-   * @param {string=} params.project
    */
 
   var init = function init() {
     var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var jsBridge = document.getElementById('PPJSBridge');
     var console = DEFAULT_CONFIG.console;
-    var project;
 
     if (jsBridge) {
-      project = jsBridge.getAttribute('project');
       console = jsBridge.getAttribute('console');
 
       if (typeof console === 'string') {
@@ -1296,11 +1291,9 @@
       }
     }
 
-    project = project || DEFAULT_CONFIG.project;
     console = params.console === undefined ? console : params.console;
     window['_PPJSBridge_'] = _objectSpread2({}, window['_PPJSBridge_'], {
-      console: console,
-      project: project
+      console: console
     });
   };
 
