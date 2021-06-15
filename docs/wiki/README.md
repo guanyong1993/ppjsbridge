@@ -141,7 +141,7 @@
     :::::
     
     ::::: paramsName {string} data.image
-    - 分享图标，大小为：`300px*300px`
+    - 分享图标，大小为：`300px*300px` 无圆角 `jpg` 格式
     :::::
     
     ::::: paramsName {string} data.url
@@ -149,7 +149,7 @@
     :::::
 
     ::::: paramsName {string} data.copy
-    - 原生分享弹窗中，点击`复制`按钮所获取的网址
+    - 原生分享弹窗中，点击`复制`按钮所获取的网址,没有传递此参数的话，就用`url`参数
     :::::
 
     ::::: paramsName {string=} data.appFriendH5

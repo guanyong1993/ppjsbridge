@@ -1,23 +1,41 @@
-
 # 使用
 
 ### es6
+
 ```js
 import PPJSBridge from '@apeiwan/ppjsbridge'
 
 // example api
-PPJSBridge.ready(function(res,app){
-   //do something
+PPJSBridge.ready(function (res, app) {
+  //do something
 })
 ```
 
 ### browser
+
 ```html
+
 <script src="https://github-npm.apeiwan.com/ppjsbridge/ppjsbridge.min.js"></script>
-<script >
+<script>
     // example api
-    PPJSBridge.ready(function(res,app){
-       //do something
+    PPJSBridge.ready(function (res, app) {
+        //do something
     })
 </script>
+```
+
+### 初始化
+
+`初始化应在调用任何 PPJSBridge 方法之前进行`
+
+```html
+<!--初始化形式1-->
+<script>
+    PPJSBridge.init({
+        console: false // 是否调用时打印日志
+    })
+</script>
+
+<!--初始化形式2：必须有属性 id="PPJSBridge" 才能识别 设置的属性值-->
+<script id="PPJSBridge" console="true" src="https://github-npm.apeiwan.com/ppjsbridge/ppjsbridge.min.js"></script>
 ```

@@ -278,6 +278,7 @@ sidebarDepth: 2
     - **url 中含有以下参数的话具有特殊效果**
     
         - hideNavi 新打开的窗口是否为全屏 1: 全屏 0: 非全屏
+        - hideBottomSafeArea 新打开的窗口是否保留安全区域，主要是iPhone 1: 不保留，默认留白 0: 保留
     ```js
           // 打开一个新窗口的 webview 
           PPJSBridge.openWindow({
@@ -286,7 +287,7 @@ sidebarDepth: 2
           
           // 打开一个全屏的webview
           PPJSBridge.openWindow({
-              url:`https://app.apeiwan.com?hideNavi=1`,
+              url:`https://app.apeiwan.com?hideNavi=1&hideBottomSafeArea=1`,
           })
     ```
     :::
@@ -307,6 +308,42 @@ sidebarDepth: 2
     :::: params {function} [options.complete]
     - 调用`native`接口后，不管成功或失败都会执行
     ::::
+
+## share
+调用原生分享
+:::tip 为什么分离出来
+
+- 在`分享`面板中，选择`皮皮陪玩`分享，如果想区分`内部分享`和`外部分享`不同`url`,原生直接取的是`url`参数,没有属性可以单独为`内部分享`设置`url`。
+  
+- 此处单独的方法做了一层`hack`处理，通过在`url`后面附加参数识别的形式
+
+:::
+- **类型**：`function`
+
+- **返回**：`无`
+
+- **调用**：[在线测试](/run/#打开新页面-share)
+    ```js
+    PPJSBridge.share(options,settingOptions)
+    ```
+
+- **参数**：
+
+  ::::: paramsName {object} options
+  - [参照分享方法](/wiki/#分享),
+    :::warning
+    
+    - **此方法已内置`cmd`属性，所以不需要传递cmd参数**
+    
+    :::
+  :::::
+
+  ::::: paramsName {object} settingOptions
+  :::: params {string} settingOptions.appOpenUrl
+  - 分享的内容，建议文字个数在`15`个以内
+  ::::
+
+      
 
 ## isCanIUse
 判定当前环境是否支持指定版本，也可以分开判断`ios`和`android`

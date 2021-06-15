@@ -28,7 +28,7 @@ const APP_SHARE_URL_KEY = '_ppjsbridge_shareurl_';
  * @param {string} params.data.content  -- 分享的标题
  * @param {string} params.data.title  -- 分享的内容
  * @param {string} params.data.image  -- 分享的图片,300*300 jpg格式，不要圆角
- * @param {object} setting
+ * @param {object=} setting
  * @param {string=} setting.appOpenUrl -- app内打开的url，有一些是把分享的url给内部分享，会导致打开的是站外的页面，需要处理一下
  */
 export const share = function (params, setting) {

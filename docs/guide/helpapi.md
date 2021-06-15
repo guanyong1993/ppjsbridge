@@ -67,3 +67,20 @@ PPJSBridge.getRequestUrlParam('https://xx.xx.xx/?name=123');
 PPJSBridge.getStitchingUrlParams({name:'123',age:'456'});
 // => name=123&age=4456
 ```
+
+## addUrlParams
+给 url 添加参数
+
+- **类型**：`function`
+
+- **返回**：`string`
+
+- **用法**：[在线测试](/run/#调用接口-invoke)
+
+```js
+PPJSBridge.addUrlParams('https://www.baidu.com/?name=456','age=789&sex=1');
+// => https://www.baidu.com/?name=456&age=789&sex=1
+
+PPJSBridge.addUrlParams('https://www.baidu.com','age=789&sex=1');
+// => https://www.baidu.com/?age=789&sex=1
+```
