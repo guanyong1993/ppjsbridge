@@ -7,8 +7,14 @@ import uuid from '../utils/uuid'
 
 /**
  * 返回指定调用的回调参数
- * @param res
- * @param params
+ * @param {object} res
+ * @param {string} res.action
+ * @param {string} res.message
+ * @param {object=} res.data
+ * @param {object} params
+ * @param {function} params.handle
+ * @param {function} params.fail
+ * @param {function} params.complete
  */
 const handleOptions = function (res, params = {}) {
   const action = res.action;
@@ -39,6 +45,9 @@ let postMessageValidate = function (params) {
     handleErrorResult = {message: 'not use api,because app notSupport', action: 'notSupport'};
   }
   if (handleErrorResult.action) {
+    if (window._PPJSBridge_.console) {
+      console.warn(':::PPJSBridge发送命令失败:::', params.cmd, params)
+    }
     handleOptions(handleErrorResult, params);
     return false;
   }
@@ -65,6 +74,9 @@ let postMessage = function (params) {
     cmd = cmd.split('.');
     options['api'] = cmd[1];
     cmd = cmd[0];
+  }
+  if (window._PPJSBridge_.console) {
+    console.warn(':::PPJSBridge命令发送成功:::', params.cmd, params)
   }
   if (os === 'ios') {
     return window.webkit.messageHandlers[cmd].postMessage(options)
@@ -94,6 +106,9 @@ let postMessageEmitEvent = function (params) {
     // todo 如果 ready 方式调用，此时第一次是没有app信息，所以ready方式的话，就先将全部对象赋值一次,这样 getApp() 才有数据返回
     if ((cmd === 'func.ready' || cmd === 'func.login') && !window.FLPPJSBridge) {
       window.FLPPJSBridge = res.data;
+    }
+    if (window._PPJSBridge_.console) {
+      console.warn(':::PPJSBridge收到App回调:::', cmd, res)
     }
     handleOptions(res, params);
     //  为了释放uuid 的方法的内容，在方法得到响应后释放内存
