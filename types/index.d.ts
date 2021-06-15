@@ -85,9 +85,9 @@ declare namespace PPJSBridge {
     }
 
     /**
-     * 分享的选项
+     * 分享的data选项
      */
-    interface shareOptions {
+    interface shareOptionsData {
         /**
          * 分享的url
          */
@@ -108,6 +108,17 @@ declare namespace PPJSBridge {
          * 分享时的图片地址
          */
         image: string
+    }
+
+    /**
+     * 分享的选项
+     */
+    interface shareOptions {
+        data: shareOptionsData,
+        handle?: invokeBridgeCallBack,
+        success?: invokeBridgeCallBackOnce,
+        fail?: invokeBridgeCallBackOnce,
+        complete?: invokeBridgeCallBackOnce,
     }
 
     /**

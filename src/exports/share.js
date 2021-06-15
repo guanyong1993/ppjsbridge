@@ -22,11 +22,12 @@ const APP_SHARE_URL_KEY = '_ppjsbridge_shareurl_';
 /**
  * 分享
  * @param {object} params
- * @param {string} params.url  -- 分享出去用户打开的url链接
- * @param {string=} params.copy  -- 分享浮层中，点击 `复制链接` 的url,如果不传默认用的 `url`参数
- * @param {string} params.content  -- 分享的标题
- * @param {string} params.title  -- 分享的内容
- * @param {string} params.image  -- 分享的图片,300*300 jpg格式，不要圆角
+ * @param {object} params.data
+ * @param {string} params.data.url  -- 分享出去用户打开的url链接
+ * @param {string=} params.data.copy  -- 分享浮层中，点击 `复制链接` 的url,如果不传默认用的 `url`参数
+ * @param {string} params.data.content  -- 分享的标题
+ * @param {string} params.data.title  -- 分享的内容
+ * @param {string} params.data.image  -- 分享的图片,300*300 jpg格式，不要圆角
  * @param {object} setting
  * @param {string=} setting.appOpenUrl -- app内打开的url，有一些是把分享的url给内部分享，会导致打开的是站外的页面，需要处理一下
  */
