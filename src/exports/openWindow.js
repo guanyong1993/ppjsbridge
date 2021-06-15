@@ -31,73 +31,74 @@ const formatWebviewRouterUrl = function (url, platform) {
  * @param {handle} params.handle -- 回调
  */
 let openWindow = function (params) {
-  if (!params.href) {
-    let version = params.version || '';
-    let versionSystem = {};
-    let androidQuery = {};
-    let iOSQuery = {};
-    let iOSUrl = params.ios;
-    let androidUrl = params.android;
-    if (typeof params.android === 'object') {
-      versionSystem['android'] = params.android.version || '';
-      androidQuery = params.android.query || {};
-      androidUrl = params.android.url;
-    }
-    if (typeof params.ios === 'object') {
-      versionSystem['ios'] = params.ios.version || '';
-      iOSQuery = params.ios.query || {};
-      iOSUrl = params.ios.url;
-    }
-    version = version || versionSystem;
-
-    let addUrlParams = function (url, stitchingUrlParams, symbol = '&') {
-      let params_prefix = url.indexOf('?') !== -1 ? symbol : '?';
-      return url + (stitchingUrlParams ? params_prefix : '') + stitchingUrlParams;
-    };
-    if (params.url) {
-      const webUrl = params.url;
-      iOSUrl = 'FLWebPageViewController?urlString=' + formatWebviewRouterUrl(webUrl, 'ios')
-      androidUrl = 'WebViewActivity?url=' + formatWebviewRouterUrl(webUrl, 'android')
-    }
-    const formatNativeQuery = function () {
-      const query = params.query;
-      let formatQuery = {};
-      let routeOSQuery = {
-        ios: {},
-        android: {}
-      };
-      for (let key in query) {
-        const _key = key + '';
-        if (_key.indexOf('[') !== -1) {
-          const paramsAry = _key.substr(1, _key.length - 2).split(',');
-          for (let i = 0; i < paramsAry.length; i++) {
-            const [os, name] = paramsAry[i].split(':');
-            routeOSQuery[os][name] = query[key];
-          }
-        } else {
-          formatQuery[key] = query[key];
-        }
-      }
-      return {...formatQuery, ...routeOSQuery[os]}
-    };
-    return invoke({
-      version,
-      data: {
-        para: JSON.stringify({
-          ios: {
-            ios_route: addUrlParams(iOSUrl, getStitchingUrlParams({...iOSQuery, ...formatNativeQuery()})),
-          },
-          android: {
-            androidRoute: addUrlParams(androidUrl, getStitchingUrlParams({...androidQuery, ...formatNativeQuery()})),
-          }
-        }[os])
-      },
-      cmd: InvokeTypes.func.openAppPage,
-      handle: params.handle
-    });
-  } else {
-    window.location.href = params.href;
+  let version = params.version || '';
+  let versionSystem = {};
+  let androidQuery = {};
+  let iOSQuery = {};
+  let iOSUrl = params.ios;
+  let androidUrl = params.android;
+  if (typeof params.android === 'object') {
+    versionSystem['android'] = params.android.version || '';
+    androidQuery = params.android.query || {};
+    androidUrl = params.android.url;
   }
+  if (typeof params.ios === 'object') {
+    versionSystem['ios'] = params.ios.version || '';
+    iOSQuery = params.ios.query || {};
+    iOSUrl = params.ios.url;
+  }
+  version = version || versionSystem;
+
+  let addUrlParams = function (url, stitchingUrlParams, symbol = '&') {
+    let params_prefix = url.indexOf('?') !== -1 ? symbol : '?';
+    return url + (stitchingUrlParams ? params_prefix : '') + stitchingUrlParams;
+  };
+  if (params.url) {
+    const webUrl = params.url;
+    iOSUrl = 'FLWebPageViewController?urlString=' + formatWebviewRouterUrl(webUrl, 'ios')
+    androidUrl = 'WebViewActivity?url=' + formatWebviewRouterUrl(webUrl, 'android')
+  }
+  const formatNativeQuery = function () {
+    const query = params.query;
+    let formatQuery = {};
+    let routeOSQuery = {
+      ios: {},
+      android: {}
+    };
+    for (let key in query) {
+      const _key = key + '';
+      if (_key.indexOf('[') !== -1) {
+        const paramsAry = _key.substr(1, _key.length - 2).split(',');
+        for (let i = 0; i < paramsAry.length; i++) {
+          const [os, name] = paramsAry[i].split(':');
+          routeOSQuery[os][name] = query[key];
+        }
+      } else {
+        formatQuery[key] = query[key];
+      }
+    }
+    return {...formatQuery, ...routeOSQuery[os]}
+  };
+  return invoke({
+    version: JSON.stringify(version) === '{}' ? '' : version,
+    data: {
+      para: JSON.stringify({
+        ios: {
+          ios_route: addUrlParams(iOSUrl, getStitchingUrlParams({...iOSQuery, ...formatNativeQuery()})),
+        },
+        android: {
+          androidRoute: addUrlParams(androidUrl, getStitchingUrlParams({...androidQuery, ...formatNativeQuery()})),
+        }
+      }[os])
+    },
+    cmd: InvokeTypes.func.openAppPage,
+    fail: function (res) {
+      if (res.action === 'notApp' && params.href) {
+        window.location.href = params.href;
+      }
+    },
+    handle: params.handle
+  });
 };
 
 export default openWindow
