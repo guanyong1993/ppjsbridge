@@ -31,7 +31,7 @@ const APP_SHARE_URL_KEY = '_ppjsbridge_shareurl_';
  * @param {object=} setting
  * @param {string=} setting.appOpenUrl -- app内打开的url，有一些是把分享的url给内部分享，会导致打开的是站外的页面，需要处理一下
  */
-export const share = function (params, setting) {
+export const share = function (params, setting = {}) {
   let {data} = params;
   let options = {...data, copy: data.copy || data.url};
   if (setting.appOpenUrl) {
