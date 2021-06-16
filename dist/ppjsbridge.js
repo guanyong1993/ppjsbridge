@@ -1274,7 +1274,7 @@
   window['_PPJSBridge_'] = DEFAULT_CONFIG;
   /**
    * PPJSBridge初始化
-   * @param {object} params
+   * @param {object=} params
    * @param {boolean=} params.console
    */
 
