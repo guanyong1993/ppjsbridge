@@ -8,7 +8,7 @@ features:
 - title: 使用环境
   details: 运行在皮皮陪玩 App 中webview的网页
 - title: 最新版本
-  details: 0.1.1
+  details: 0.1.2
 - title: 关于我们
   details: 武汉岚晨网络科技有限公司
 footer: Copyright © 2020-present apeiwan
