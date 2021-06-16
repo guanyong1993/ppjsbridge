@@ -6,7 +6,7 @@
 
 let OSS = require('ali-oss');
 let fs = require('fs');
-let config = require('config');
+let config = require('./config');
 let ossConfig = config.oss;
 
 module.exports = function (params) {
