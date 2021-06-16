@@ -338,11 +338,29 @@ sidebarDepth: 2
     :::
   :::::
 
-  ::::: paramsName {object} settingOptions
+  :::: params {object} settingOptions
+  - 设置的参数
+  ::::
   :::: params {string} settingOptions.appOpenUrl
-  - 分享的内容，建议文字个数在`15`个以内
+  - 如果需要区分站内和站外的`url`,需要设置此参数。一般是`window.location.href`
   ::::
 
+
+## init
+初始化
+- **类型**：`function`
+
+- **返回**：`void`
+
+- **调用**：[在线测试](/run/#调用接口-invoke)
+```js
+PPJSBridge.init(params)
+```
+- **参数**：
+
+  ::::: params {object} params.console
+  - 是否开启日志打印,全局默认的是`false`
+  :::::
       
 
 ## isCanIUse

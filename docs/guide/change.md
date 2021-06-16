@@ -6,9 +6,9 @@ sidebarDepth: 1
 
 ## v0.1.2【2021-06-16】
 
-1、 新增定制化 `share` 方法。
+1、 新增方法 [share](/guide/api.html#share) 方法。
 
-2、 新增 `init` 是否开启日志打印。
+2、 新增方法 `init` 。
 
 3、 优化 `openWindow` 方法。
 
