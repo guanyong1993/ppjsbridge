@@ -8,7 +8,7 @@ sidebarDepth: 1
 
 1、 新增方法 [share](/guide/api.html#share) 方法。
 
-2、 新增方法 `init` 。
+2、 新增方法 [init](/guide/api.html#init) 。
 
 3、 优化 `openWindow` 方法。
 
