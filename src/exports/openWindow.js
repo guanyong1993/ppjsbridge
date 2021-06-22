@@ -50,8 +50,8 @@ let openWindow = function (params) {
   version = version || versionSystem;
 
   let addUrlParams = function (url, stitchingUrlParams, symbol = '&') {
-    let params_prefix = url.indexOf('?') !== -1 ? symbol : '?';
-    return url + (stitchingUrlParams ? params_prefix : '') + stitchingUrlParams;
+    let paramsPrefix = url.indexOf('?') !== -1 ? symbol : '?';
+    return url + (stitchingUrlParams ? paramsPrefix : '') + stitchingUrlParams;
   };
   if (params.url) {
     const webUrl = params.url;
